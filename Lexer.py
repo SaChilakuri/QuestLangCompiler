@@ -1,27 +1,57 @@
 import ply.lex as lex
 
+reserved = {
+        "blueprint":"BLUEPRINT",
+        "def":"DEF",
+        "method":"METHOD",
+        "field":"FIELD",
+        "static":"STATIC",
+        "var":"VAR",
+        "int":"INT",
+        "char":"CHAR",
+        "boolean":"BOOLEAN",
+        "void":"VOID",
+        "true":"TRUE",
+        "false":"FALSE",
+        "null":"NULL",
+        "this":"THIS",
+        "if":"IF",
+        "elif":"ELIF",
+        "else":"ELSE",
+        "while":"WHILE",
+        "return":"RETURN",
+        "prompt":"PROMPT",
+        "valid_values":"VALID_VALUES"
+        }
+
 tokens = [
-    'KEYWORD',
-    'SYMBOL',
+    'COMMENT',
     'INTEGER',
     'STRING',
     'IDENTIFIER'
-]
+] + list(reserved.values())
+literals = ["{","}","[","]","(",")",".",",",";",":","+","-","*","/","<",">","=","~"]
 
-t_KEYWORD = r"blueprint | def | method | field | static | var | int | char | boolean | void | true | false | null | this | if | elif | else | while | return |  prompt | valid_values"
-t_SYMBOL = r" { | } | \[ | \] | \( | \) | . | , | ; | : | \+ | - | \* | / | < | > | = | ~"
+
 def t_INTEGER(t):
     r'\d+'
     t.value = int(t.value)
     return t 
+
 t_STRING = r"\".*\""
-t_IDENTIFIER= r"[a-zA-Z]([A-Za-z0-9])*"
+
+def t_IDENTIFIER(t):
+    r"[a-zA-Z]([A-Za-z0-9])*"
+    t.type = reserved.get(t.value,'IDENTIFIER')
+    return t  
 
 t_ignore = " \t"
 
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
+
+t_ignore_COMMENT = r'\#.*'
 
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
