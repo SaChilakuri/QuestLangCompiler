@@ -45,6 +45,12 @@ def p_term_unaryOp(p):
     elif p[1] == '~':
         p[0] = not p[2]
 
+def p_term_constants(p):
+    '''term : INTEGER
+            | STRING
+            | IDENTIFIER'''
+    p[0] = p[1]
+
 
 
 
