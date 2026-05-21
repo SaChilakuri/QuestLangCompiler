@@ -10,6 +10,16 @@ precedence = (
     ('right', 'UMINUS'),
 )
 
+# Simple prompt format, returns a tuple with None as first element
+def p_prompt_simple(p):
+    '''prompt : PROMPT ':' expression ';' '''
+    p[0] = (None, input(p[3][1:-1] + " "))
+
+# Complex prompt format, returns a tuple with the variable as first element
+def p_prompt_complex(p):
+    '''prompt : PROMPT '[' IDENTIFIER ']' ':' expression ';' '''
+    p[0] = (p[3], input(p[6][1:-1] + " "))
+
 def p_expressions(p):
     '''expression : term'''
     p[0] = p[1]
@@ -50,6 +60,11 @@ def p_term_constants(p):
             | STRING
             | IDENTIFIER'''
     p[0] = p[1]
+
+# Build the parser and write a test line
+parser = yacc.yacc()
+result = parser.parse('prompt[a] : "What is your strength?" ;')
+print(result)
 
 
 
