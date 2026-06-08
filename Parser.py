@@ -1,6 +1,8 @@
 import ply.yacc as yacc
+import SymbolTable as table
 
 from Lexer import tokens
+
 
 precedence = (
     ('left', '|', '&'),
@@ -36,7 +38,7 @@ def p_expression_recursive(p):
                   | term '<' term
 
                   | term '>' term
-                  | term '=' term'''
+                  | term '?' term'''
     if p[2] == '+':    p[0] = p[1] + p[3]
     elif p[2] == '-':  p[0] = p[1] - p[3]
     elif p[2] == '*':  p[0] = p[1] * p[3]
@@ -45,7 +47,7 @@ def p_expression_recursive(p):
     elif p[2] == '|':  p[0] = p[1] or p[3]
     elif p[2] == '<':  p[0] = p[1] < p[3]
     elif p[2] == '>':  p[0] = p[1] > p[3]
-    elif p[2] == '=':  p[0] = p[1] == p[3]
+    elif p[2] == '?':  p[0] = p[1] == p[3] 
 
 def p_term_unaryOp(p):
     '''term : '-' term %prec UMINUS
@@ -57,8 +59,7 @@ def p_term_unaryOp(p):
 
 def p_term_constants(p):
     '''term : INTEGER
-            | STRING
-            | IDENTIFIER'''
+            | STRING'''
     p[0] = p[1]
 
 # Build the parser and write a test line

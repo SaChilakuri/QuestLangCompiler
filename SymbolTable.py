@@ -5,7 +5,7 @@ class Symbol:
         self.value = value
     
 class SymbolTable:
-    def __init(self, parent=None):
+    def __init__(self, parent=None):
         self.symbols={}
         self.parent = parent
     
