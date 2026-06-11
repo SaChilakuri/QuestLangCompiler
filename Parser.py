@@ -3,14 +3,56 @@ import SymbolTable as table
 
 from Lexer import tokens
 
+global_table=table.SymbolTable()
+current_table=global_table()
 
 precedence = (
     ('left', '|', '&'),
-    ('left', '<', '>', '='),
+    ('left', '<', '>', '?'),
     ('left', '+', '-'),
     ('left', '*', '/'),
     ('right', 'UMINUS'),
 )
+
+# #Handles blueprints (sets the scope to the global one after completion)
+# def p_blueprint(p):
+#     '''blueprint_decl: blueprint_header blueprint_variable_declarations subroutine_declarations '}' '''
+#     current_table=global_table
+
+# #Seperate rule created to handle creating the symbol_table before the variables are declared
+# def p_blueprint_header(p):
+#     '''blueprint_header: BLUEPRINT IDENTIFIER '{' '''
+#     blueprint_name = p[2]
+#     current_table = table.SymbolTable(global_table)
+#     symbol = table.Symbol(blueprint_name,'class',current_table)
+#     global_table.insert(symbol)
+
+# #handles empty stuff (and provides base cases)
+# def p_empty(p):
+#     '''empty: '''
+
+# #handles blueprint variables
+# def p_blueprint_variables(p):
+#     '''blueprint_variable_declarations : blueprint_variable_declarations blueprint_variable_decl
+#                                        | empty'''
+    
+#     if len(p) == 3:
+#         p[0]=p[1]+[p[2]]
+#     else:
+#         p[0]=[]
+
+# #handles subroutine declarations
+# def p_subroutine_declarations(p):
+#     '''subroutine_declarations: subroutine_declarations subroutine_declaration
+#                               |'''
+    
+#     if len(p) == 3:
+#         p[0]=p[1]+[p[2]]
+#     else:
+#         p[0]=[]
+
+
+    
 
 # Simple prompt format, returns a tuple with None as first element
 def p_prompt_simple(p):
