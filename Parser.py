@@ -1,10 +1,11 @@
 import ply.yacc as yacc
-import SymbolTable as table
+from table import SymbolTable
+from table import Symbol
 
 from Lexer import tokens
 
-global_table=table.SymbolTable()
-current_table=global_table()
+global_table= SymbolTable()
+current_table=global_table
 
 precedence = (
     ('left', '|', '&'),
