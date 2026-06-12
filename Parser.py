@@ -45,14 +45,60 @@ precedence = (
 # #handles subroutine declarations
 # def p_subroutine_declarations(p):
 #     '''subroutine_declarations: subroutine_declarations subroutine_declaration
-#                               |'''
-    
+#                               | empty'''
 #     if len(p) == 3:
 #         p[0]=p[1]+[p[2]]
 #     else:
 #         p[0]=[]
 
+# def p_blueprint_variable(p):
+#     '''blueprint_variable_decl: STATIC type IDENTIFIER
+#                               | FIELD type IDENTIFIER'''
+    
+#     current_table.insert(Symbol(p[3],p[2],None)) #Need to find an implementation to distinguish between static and field
 
+# def p_type(p):
+#     '''type: INT
+#            | CHAR
+#            | BOOLEAN'''
+#     p[0] = p[1]
+
+# def p_type_ident(p):
+#     '''type: IDENTIFIER'''
+#     p[0]=p[1] #need to update this lol
+# def p_subroutine_decl(p):
+#     '''subroutine_declaration: subroutine_header parameter_list ')' subroutine_body'''
+#     current_table = current_table.parent
+
+# def p_subroutine_header(p):
+#     '''subroutine_header: DEF return IDENTIFIER '(' 
+#                         | METHOD return IDENTIFIER '(' '''
+#     symbol = Symbol(p[3],p[2],SymbolTable(current_table))
+#     current_table.insert(symbol)
+#     current_table=symbol.value
+
+# def p_return(p):
+#     '''return: type
+#              | VOID'''
+#     p[0]=p[1]
+
+# def p_parameter_list(p):
+#     '''parameter_list: parameter_list parameters
+#                      | parameter
+#                      | empty'''
+#     if len(p) == 4:
+#         p[0]=p[1]+[p[3]]
+#     else:
+#         p[0]=[]
+
+# def p_parameter(p):
+#     '''parameter: type IDENTIFIER'''
+#     current_table.insert(Symbol(p[2],p[1],None))
+
+# def p_parameters(p):
+#     '''parameters: ',' parameter'''
+#
+# #Need to finish subroutine_body and making statements work, then we could start testing tbh
     
 
 # Simple prompt format, returns a tuple with None as first element
