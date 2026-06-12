@@ -27,29 +27,17 @@ precedence = (
 #     current_table = table.SymbolTable(global_table)
 #     symbol = table.Symbol(blueprint_name,'class',current_table)
 #     global_table.insert(symbol)
-
 # #handles empty stuff (and provides base cases)
 # def p_empty(p):
 #     '''empty: '''
-
 # #handles blueprint variables
 # def p_blueprint_variables(p):
 #     '''blueprint_variable_declarations : blueprint_variable_declarations blueprint_variable_decl
 #                                        | empty'''
-    
-#     if len(p) == 3:
-#         p[0]=p[1]+[p[2]]
-#     else:
-#         p[0]=[]
-
 # #handles subroutine declarations
 # def p_subroutine_declarations(p):
 #     '''subroutine_declarations: subroutine_declarations subroutine_declaration
 #                               | empty'''
-#     if len(p) == 3:
-#         p[0]=p[1]+[p[2]]
-#     else:
-#         p[0]=[]
 
 # def p_blueprint_variable(p):
 #     '''blueprint_variable_decl: STATIC type IDENTIFIER
@@ -62,6 +50,10 @@ precedence = (
 #            | CHAR
 #            | BOOLEAN'''
 #     p[0] = p[1]
+
+# def p_type_array(p):
+#     '''type: ARRAY '<' type '>' '''
+#     p[0]= p[1] + p[3]
 
 # def p_type_ident(p):
 #     '''type: IDENTIFIER'''
@@ -98,8 +90,34 @@ precedence = (
 # def p_parameters(p):
 #     '''parameters: ',' parameter'''
 #
-# #Need to finish subroutine_body and making statements work, then we could start testing tbh
+#
+# def p_subroutine_body(p):
+#     '''subroutine_body: '{' function_parameters statements '}' '''
+
+# def p_function_parameters(p):
+#     '''function_parameters: prompts valid_values'''
+
+# def p_prompts(p):
+#     '''prompts: prompts prompt
+#               | empty'''
+
+# def p_valid_values(p):
+#     '''valid_values: valid_values valid_value
+#                    | empty'''
+
+# def p_valid_value_simple(p):
+#     '''valid_value: VALID_VALUES ':' array'''
+
+# def p_array(p):
+#     '''array: '['expression_list']' '''
+#     p[0] = p[2]
     
+#
+# Need to implement arrays properly, this might have to make the lexer a biiit different lol.
+# next steps, How the hell do I want to use simple tables and tokens when parsing
+# For example, Do expressions go onto the stack or do they evaluate to a token that is then passed up
+# Either or, I need to find a way to properly push up types and stuff, since this is a type specific language
+# This is going to get crazy lol
 
 # Simple prompt format, returns a tuple with None as first element
 def p_prompt_simple(p):

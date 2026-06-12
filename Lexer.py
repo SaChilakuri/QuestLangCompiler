@@ -21,7 +21,8 @@ reserved = {
         "while":"WHILE",
         "return":"RETURN",
         "prompt":"PROMPT",
-        "valid_values":"VALID_VALUES"
+        "valid_values":"VALID_VALUES",
+        "array":"ARRAY"
         }
 
 tokens = [
